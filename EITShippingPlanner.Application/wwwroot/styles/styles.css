@@ -1,0 +1,178 @@
+@font-face {
+  font-family: "MullishBold";
+  src: url("../assets/fonts/static/Mulish-Bold.ttf");
+}
+
+@font-face {
+  font-family: "MullishExtraBold";
+  src: url("../assets/fonts/static/Mulish-ExtraBold.ttf");
+}
+
+@font-face {
+  font-family: "MullishRegular";
+  src: url("../assets/fonts/static/Mulish-Regular.ttf");
+}
+
+* {
+  font-family: MullishRegular;
+  color: #262626;
+}
+
+body {
+  background-color: #e5e5e5 !important;
+}
+
+h1 {
+  font-family: MullishExtraBold;
+}
+
+a,
+a:hover,
+a:visited,
+a:active {
+  color: #3c64b1;
+  text-decoration: none !important;
+  font-weight: bold;
+}
+
+.field-label {
+  color: #737b7d;
+}
+
+.field-icons {
+  max-width: 100%;
+
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+
+  margin: 10px 0;
+  padding: 0 5px;
+}
+.return-field {
+  color: #3c64b1;
+  font-size: 36px;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* White */
+
+  background: #ffffff;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+
+  /* Inside auto layout */
+
+  margin: 10px 0px;
+}
+
+.main-container {
+  background-color: #ffffff;
+}
+
+.main-header {
+  color: #3c64b1;
+  font-size: 28px;
+}
+
+.form-switch.form-switch-lg .form-check-input {
+  height: 2rem;
+  width: calc(3rem + 0.75rem);
+  border-radius: 4rem;
+  margin: 10px 0px;
+}
+.form-check {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+.form-switch {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+.submit-button {
+  border-radius: 3px;
+
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: none !important;
+  /* Primary */
+
+  background: #3c64b1;
+  color: #ffffff;
+  /* Shadow */
+
+  padding: 0.8rem;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background: #ffffff;
+  color: #3c64b1;
+  cursor: pointer;
+}
+
+.button-shadow {
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.update-button {
+  border-radius: 3px;
+  width: 160px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  color: #3c64b1;
+}
+
+.update-button:hover {
+  background: #3c64b1;
+  color: #ffffff;
+}
+
+.field-background {
+  border: transparent !important;
+  padding: 0.8rem !important;
+
+  background-size: auto !important;
+  background-repeat: no-repeat !important;
+  background-origin: content-box !important;
+  background-position: right !important;
+}
+
+.field-background-calendar {
+  background-image: url(/assets/field-icons/calendar.svg) !important;
+}
+.field-background-package {
+  background-image: url(/assets/field-icons/package.svg) !important;
+}
+.field-background-map-pin {
+  background-image: url(/assets/field-icons/map-pin.svg) !important;
+}
+.field-background-anchor {
+  background-image: url(/assets/field-icons/anchor.svg) !important;
+}
+.field-background-maximize-2 {
+  background-image: url(/assets/field-icons/maximize-2.svg) !important;
+}
+.field-background-cpu {
+  background-image: url(/assets/field-icons/cpu.svg) !important;
+}
+.top-buffer {
+  margin-top: 20px;
+}

@@ -1,0 +1,195 @@
+﻿@using EITShippingPlanner.Core.Enum
+@using static EITShippingPlanner.Core.Enum.ParcelType;
+@model EITShippingPlanner.Application.Models.RouteCalculationPageModel;
+@{
+    ViewData["Title"] = "Route Calculator";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="~/styles/styles.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- JS Script reference -->
+    <script src="~/js/index.js"></script>
+
+    <div class="container header-container py-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="logo-group d-flex align-items-center">
+                <img src="~/assets/logo/logo.png">
+                <h1 class="main-header px-3">East India Trading Co.</h1>
+            </div>
+            <a href="~/PriceUpdate">
+                <div class="update-button button-shadow">
+                    Update Price
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="container main-container rounded p-4">
+        <div class="row px-3">
+            <div class="col">
+                @using (MvcForm form = Html.BeginForm(FormMethod.Post, new { name="calculation-input", id="calculation-input-form", enctype = "multipart/form-data" }))
+                {
+                    <div class="row">
+                        <div class="col">
+                            <label class="field-label" id="dateLabel">ETD</label>
+                            <div class="input-group">
+                                <input asp-for="@Model.ETD" type="text" class="form-control input-box" id="date-input" placeholder="dd-mm-yyyy" required
+                                       value="@(@Model.ETD == default ? string.Empty : @Model.ETD.ToString("dd-MM-yyyy"))">
+                                <img class="field-icons" src="~/assets/field-icons/calendar.svg" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="field-label" id="parcelLabel">Parcel Type</label>
+                            <div class="input-group">
+                                <select class="form-select input-box" id="parcel-type-list" placeholder="Weapons" value="Weapons"
+                                        asp-for="@Model.ParcelType">
+                                    <option value="@ParcelTypeEnum.Weapons">Weapons</option>
+                                    <option value="@ParcelTypeEnum.LiveAnimals">Live animals</option>
+                                    <option value="@ParcelTypeEnum.RefrigeratedGoods">Refrigerated goods</option>
+                                </select>
+                                <img class="field-icons" src="~/assets/field-icons/package.svg" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="field-label" id="departureLabel">Departure</label>
+                            <div class="input-group">
+                                <input asp-for="@Model.Departure"
+                                       class="form-control input-box" list="departure-locations" id="departure-list"
+                                       placeholder="Choose Location" required>
+                                <datalist id="departure-locations">
+                                    @if (Model.Locations != null)
+                                    {
+                                        foreach (var location in Model.Locations)
+                                        {
+                                            <option data-value="@location.Code">@location.Name</option>
+                                        }
+                                    }
+                                </datalist>
+                                <img class="field-icons" src="~/assets/field-icons/map-pin.svg" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="field-label" id="destinationLabel">Destination</label>
+                            <div class="input-group">
+                                <input asp-for="@Model.Destination"
+                                       class="form-control input-box" list="destination-locations" id="destination-list"
+                                       placeholder="Choose Location" required>
+                                <datalist id="destination-locations">
+                                    @if (Model.Locations != null)
+                                    {
+                                        foreach (var location in Model.Locations)
+                                        {
+                                            <option data-value="@location.Code">@location.Name</option>
+                                        }
+                                    }
+                                </datalist>
+                                <img class="field-icons" src="~/assets/field-icons/map-pin.svg" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="field-label" id="weightLabel">Parcel Weight</label>
+                            <div class="input-group">
+                                <input asp-for="@Model.Weight" type="text" class="form-control input-box" id="weight-input" placeholder="kg" required>
+                                <img class="field-icons" src="~/assets/field-icons/anchor.svg" />
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <label class="field-label" id="lengthLabel">Parcel Length</label>
+                            <div class="input-group">
+                                <input asp-for="@Model.Length" type="text" class="form-control input-box" placeholder="cm" id="length-input" required>
+                                <img class="field-icons" src="~/assets/field-icons/maximize-2.svg" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="field-label" id="optimization-input">Optimization</label>
+                            <div class="input-group">
+                                <select class="form-select input-box" id="optimization-list" placeholder="Best Price" asp-for="@Model.Optimization">
+                                    <option value="@OptimizationOption.Price">Best Price</option>
+                                    <option value="@OptimizationOption.Time">Best Time</option>
+                                </select>
+                                <img class="field-icons" src="~/assets/field-icons/chevron-down.svg" />
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <label class="field-label" id="prioritized-input">Prioritize EIT</label>
+                            <div class="form-check form-switch form-switch-lg">
+                                <input asp-for="@Model.PrioritizeEIT"
+                                       class="form-check-input" type="checkbox" id="eti-optimize-check">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="submit-button button-shadow" onClick="event.preventDefault ;formValidate()">
+                        Calculate
+                    </button>
+                }
+            </div>
+            <div class="col ms-5">
+                <h4 class="field-label mb-4">Results</h4>
+                <div>
+                    <span class="field-label">Price</span>
+                    <br>
+                    <span class="return-field">$@Model.TotalPrice</span>
+                </div>
+                <div>
+                    <span class="field-label">Transit Time</span>
+                    <br>
+                    <span class="return-field">@Model.TotalTime</span>
+                </div>
+            </div>
+        </div>
+        <div class="container pt-5">
+            <table class="table table-borderless table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" colspan="3" class="field-label">No</th>
+                        <th scope="col" colspan="3" class="field-label">Departure</th>
+                        <th scope="col" colspan="3" class="field-label">Destination</th>
+                        <th scope="col" colspan="3" class="field-label">Transportation Agency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Results != null)
+                    {
+                        for (var i = 0; i < Model.Results.Count; i++)
+                        {
+                            <tr>
+                                <th scope="row">@(i + 1)</th>
+                                <td colspan="3">@Model.Results[i].Departure</td>
+                                <td colspan="3">@Model.Results[i].Destination</td>
+                                <td colspan="3">@Model.Results[i].TransportationAgency</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
